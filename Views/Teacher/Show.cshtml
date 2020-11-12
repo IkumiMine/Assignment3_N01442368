@@ -1,0 +1,19 @@
+﻿@model Assignment3_N01442368.Models.Teacher
+@{
+    ViewBag.Title = "Show";
+}
+
+<div class="body-content">
+    <h2>Teacher information</h2>
+
+    <div class="main-content">
+        <h3>@Model.TeacherFname @Model.TeacherLname</h3>
+        <div class="info">
+            <p>Hire date: @Model.HireDate</p>
+            <p>Salary: $@Model.Salary</p>
+            <p>Class: @Model.ClassName</p>
+            <p>Class date: @Model.StartDate - @Model.FinishDate</p>
+        </div>
+        <a href="/Teacher/List"> &#8592 Bact to the list</a>
+    </div>
+</div>

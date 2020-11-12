@@ -1,0 +1,28 @@
+﻿@model List<Assignment3_N01442368.Models.Teacher>
+@{
+    ViewBag.Title = "List";
+}
+
+
+<div class="body-content">
+    <h2>List of Teachers</h2>
+
+    <div class="main-content">
+        <p>Imput the teacher's first name which you like to know and click View more info!</p>
+        <form action="/Teacher/Show/" method="POST">
+            <div>
+                <input type="number" name="teacherid" />
+            </div>
+            <div class="view-button">
+                <input class="viewButton" type="submit" value="View more info" />
+            </div>
+        </form>
+
+        <div class="id-name">
+            @foreach (var teacher in Model)
+            {
+            <div> @teacher.TeacherId. @teacher.TeacherFname @teacher.TeacherLname</div>
+            }
+        </div>
+    </div>
+</div>
