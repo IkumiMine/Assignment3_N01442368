@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Assignment3_N01442368.Models;
+using System.Diagnostics;
 
 //#nullable enable
 
@@ -23,22 +24,65 @@ namespace Assignment3_N01442368.Controllers
         }
 
         //GET: /Teacher/List
-        public ActionResult List()
+        public ActionResult List(string SearchKey = null)
         {
             TeacherDataController controller = new TeacherDataController();
-            List<Teacher> Teachers = controller.ListTeachers();
+            List<Teacher> Teachers = controller.ListTeachers(SearchKey);
             return View(Teachers);
         }
 
-        //POST: /Teacher/Show/{TeacherId}
-        [HttpPost]
-        public ActionResult Show(int? TeacherId)
-        //public ActionResult Show(string TeacherFname)
+        //GET: /Teacher/Show/{id}
+        public ActionResult Show(int id)
         {
             TeacherDataController controller = new TeacherDataController();
-            Teacher TeacherInfo = controller.Findteacher(TeacherId);
-            return View(TeacherInfo);
+            Teacher NewTeacher = controller.FindTeacher(id);
+
+            return View(NewTeacher);
         }
+
+        //GET: /Teacher/DeleteConfirm/{id}
+        public ActionResult DeleteConfirm(int id)
+        {
+            TeacherDataController controller = new TeacherDataController();
+            Teacher NewTeacher = controller.FindTeacher(id);
+
+            return View(NewTeacher);
+        }
+
+        //POST: /Teacher/Delete/{id}
+        [HttpPost]
+        public ActionResult Delete(int id)
+        {
+            TeacherDataController controller = new TeacherDataController();
+            controller.DeleteTeacher(id);
+
+            return RedirectToAction("List");
+        }
+
+        //GET: /Teacher/Add
+        public ActionResult Add()
+        {
+            return View();
+        }
+
+        //POST: /Teacher/Create
+        [HttpPost]
+        public ActionResult Create(string TeacherFname, string TeacherLname)
+        {
+            //Identify if this method is running
+            Debug.WriteLine(TeacherFname);
+            Debug.WriteLine(TeacherLname);
+
+            Teacher NewTeacher = new Teacher();
+            NewTeacher.TeacherFname = TeacherFname;
+            NewTeacher.TeacherLname = TeacherLname;
+
+            TeacherDataController controller = new TeacherDataController();
+            controller.AddTeacher(NewTeacher);
+
+            return RedirectToAction("List");
+        }
+
 
     }
 }

@@ -24,7 +24,8 @@ namespace Assignment3_N01442368.Models
                     + "; user = " + User
                     + "; database = " + Database
                     + "; port = " + Port
-                    + "; password = " + Password;
+                    + "; password = " + Password
+                    + ";convert zero datetime = True";
             }
         }
 

@@ -26,8 +26,8 @@ namespace Assignment3_N01442368.Controllers
         /// A list of teachers (first names and last names)
         /// </return>
         [HttpGet]
-        [Route("api/TeacherData/ListTeachers")]
-        public List<Teacher> ListTeachers()
+        [Route("api/TeacherData/ListTeachers/{SearchKey?}")]
+        public List<Teacher> ListTeachers(string SearchKey=null)
         {
             //Create an instance of a connection
             MySqlConnection Connection = School.AccessDatabase();
@@ -39,7 +39,10 @@ namespace Assignment3_N01442368.Controllers
             MySqlCommand cmd = Connection.CreateCommand();
 
             //SQL QUERY
-            cmd.CommandText = "SELECT * FROM teachers";
+            cmd.CommandText = "SELECT * FROM teachers WHERE LOWER(teacherfname) LIKE LOWER(@SearchKey) OR LOWER(teacherlname) LIKE LOWER(@SearchKey) OR LOWER(CONCAT(teacherfname, ' ', teacherlname)) LIKE LOWER(@SearchKey)";
+
+            cmd.Parameters.AddWithValue("@SearchKey", "%" + SearchKey + "%");
+            cmd.Prepare();
 
             //Gather Result Set of query into a variable
             MySqlDataReader ResultSet = cmd.ExecuteReader();
@@ -51,7 +54,7 @@ namespace Assignment3_N01442368.Controllers
             while (ResultSet.Read())
             {
                 //Access column information by DB column name as an index
-                int TeacherId = (int)ResultSet["teacherid"];
+                int TeacherId = Convert.ToInt32(ResultSet["teacherid"]);
                 string TeacherFname = ResultSet["teacherfname"].ToString();
                 string TeacherLname = ResultSet["teacherlname"].ToString();
                 //optional to add the following data
@@ -88,17 +91,14 @@ namespace Assignment3_N01442368.Controllers
         /// Returns teachers'information in the system 
         /// Some of codes are commented that is my attempt that I tried to find a teacher by their first name and it did't work
         /// </summary>
-        /// <example>GET: api/TeacherData/FindTeacher/{teacherid}</example>
+        /// <example>GET: api/TeacherData/FindTeacher/1</example>
         /// <return>
         /// information of a teacher (first name, last name, teacher ID, hire date, salary, class, class date)
         /// </return>
         [HttpGet]
-        [Route("api/TeacherData/FindTeacher/{TeacherId}")]
-        //[Route("api/TeacherData/FindTeacger/{TeacherFname}")]
-        public Teacher Findteacher(int? TeacherId)
-        //public Teacher Findteacher(string? TeacherFname)
+        public Teacher FindTeacher(int id)
         {
-            Teacher TeacherInfo = new Teacher();
+            Teacher NewTeacher = new Teacher();
 
             //Create an instance of a connection
             MySqlConnection Connection = School.AccessDatabase();
@@ -110,8 +110,9 @@ namespace Assignment3_N01442368.Controllers
             MySqlCommand cmd = Connection.CreateCommand();
 
             //SQL QUERY
-            cmd.CommandText = "SELECT teachers.teacherid, teacherfname, teacherlname, DATE_FORMAT(hiredate,'%M %d %Y') AS hiredate, salary, classname, DATE_FORMAT(startdate, '%M %d %Y') AS startdate, DATE_FORMAT(finishdate, '%M %d %Y') AS finishdate FROM teachers JOIN classes ON teachers.teacherid = classes.teacherid WHERE teachers.teacherid =" + TeacherId;
-            //cmd.CommandText = "SELECT teachers.teacherid, teacherfname, teacherlname, DATE_FORMAT(hiredate,'%M %d %Y') AS hiredate, salary, classname, DATE_FORMAT(startdate, '%M %d %Y') AS startdate, DATE_FORMAT(finishdate, '%M %d %Y') AS finishdate FROM teachers JOIN classes ON teachers.teacherid = classes.teacherid WHERE teachers.teacherfname =" + TeacherFname;
+            cmd.CommandText = "SELECT * FROM teachers JOIN classes ON teachers.teacherid = classes.teacherid WHERE teachers.teacherid = @id";
+            cmd.Parameters.AddWithValue("@id", id);
+            cmd.Prepare();
 
             //Gather Result Set of query into a variable
             MySqlDataReader ResultSet = cmd.ExecuteReader();
@@ -120,25 +121,25 @@ namespace Assignment3_N01442368.Controllers
             while (ResultSet.Read())
             {
                 //Access column information by DB column name as an index
-                //int TeacherId = (int)ResultSet["teacherid"];
+                int TeacherId =  Convert.ToInt32(ResultSet["teacherid"]);
                 string TeacherFname = ResultSet["teacherfname"].ToString();
                 string TeacherLname = ResultSet["teacherlname"].ToString();
-                string HireDate = ResultSet["hiredate"].ToString();
+                DateTime HireDate = (DateTime)ResultSet["hiredate"];
                 decimal Salary = (decimal)ResultSet["salary"];
                 string ClassName = ResultSet["classname"].ToString();
-                string StartDate = ResultSet["startdate"].ToString();
-                string FinishDate = ResultSet["finishdate"].ToString();
+                DateTime StartDate = (DateTime)ResultSet["startdate"];
+                DateTime FinishDate =(DateTime)ResultSet["finishdate"];
 
 
                 //assign the column information to the fields created in Teacher.cs
-                //TeacherInfo.TeacherId = TeacherId;
-                TeacherInfo.TeacherFname = TeacherFname;
-                TeacherInfo.TeacherLname = TeacherLname;
-                TeacherInfo.HireDate = HireDate;
-                TeacherInfo.Salary = Salary;
-                TeacherInfo.ClassName = ClassName;
-                TeacherInfo.StartDate = StartDate;
-                TeacherInfo.FinishDate = FinishDate;
+                NewTeacher.TeacherId = TeacherId;
+                NewTeacher.TeacherFname = TeacherFname;
+                NewTeacher.TeacherLname = TeacherLname;
+                NewTeacher.HireDate = HireDate;
+                NewTeacher.Salary = Salary;
+                NewTeacher.ClassName = ClassName;
+                NewTeacher.StartDate = StartDate;
+                NewTeacher.FinishDate = FinishDate;
 
             }
 
@@ -146,7 +147,64 @@ namespace Assignment3_N01442368.Controllers
             Connection.Close();
 
             //Return the teacher information
-            return TeacherInfo;
+            return NewTeacher;
+        }
+
+        ///<summary>
+        ///Deletes an teacher from the connected MySQL database if the ID of that teacher exists. Does NOT maintain relational integrity. Non-Deterministic.
+        /// </summary>
+        /// <param name="id">The ID of the teacher.</param>
+        /// <example>POST /api/TeacherData/DeleteTeacher/6</example>
+        [HttpPost]
+        public void DeleteTeacher(int id)
+        {
+            //Create an instance of a connection
+            MySqlConnection Connection = School.AccessDatabase();
+
+            //Open the connection between the web server and database
+            Connection.Open();
+
+            //Establish a new command for our database
+            MySqlCommand cmd = Connection.CreateCommand();
+
+            //SQL QUERY
+            cmd.CommandText = "DELETE FROM teachers where teacherid=@id";
+            cmd.Parameters.AddWithValue("@id", id);
+            cmd.Prepare();
+
+            cmd.ExecuteNonQuery();
+
+            Connection.Close();
+
+        }
+
+        ///<summary>
+        ///Adds an teacher to the MySQL Database.
+        /// </summary>
+        /// <param name="NewTeacher">An object with fields to the columns of the teacher's table. Non-Deterministic.</param>
+        /// <exmaple>POST api/TeacherData/AddTeacher</exmaple>
+        [HttpPost]
+        public void AddTeacher(Teacher NewTeacher)
+        {
+            //Create an instance of a connection
+            MySqlConnection Connection = School.AccessDatabase();
+
+            //Open the connection between the web server and database
+            Connection.Open();
+
+            //Establish a new command for our database
+            MySqlCommand cmd = Connection.CreateCommand();
+
+            //SQL QUERY
+            cmd.CommandText = "INSERT INTO teachers (teacherfname, teacherlname) VALUES (@TeacherFname, @TeacherLname)";
+            cmd.Parameters.AddWithValue("@TeacherFname", NewTeacher.TeacherFname);
+            cmd.Parameters.AddWithValue("@TeacherLname", NewTeacher.TeacherLname);
+            cmd.Prepare();
+
+            cmd.ExecuteNonQuery();
+
+            Connection.Close();
+
         }
     }
 }

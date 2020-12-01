@@ -8,7 +8,7 @@
     <h2>List of Teachers</h2>
 
     <div class="main-content">
-        <p>Imput the teacher's first name which you like to know and click View more info!</p>
+        <!--<p>Imput the teacher's first name which you like to know and click View more info!</p>
         <form action="/Teacher/Show/" method="POST">
             <div>
                 <input type="number" name="teacherid" />
@@ -16,12 +16,23 @@
             <div class="view-button">
                 <input class="viewButton" type="submit" value="View more info" />
             </div>
+        </form>-->
+
+        <nav>
+            <a href="/Teacher/Add">Add a new teacher</a>
+        </nav>
+
+        <form action="/Teacher/List" method="GET">
+            <input type="text" name="SearchKey" autocomplete="off" />
+            <input type="submit" value="Search"/>
         </form>
 
         <div class="id-name">
             @foreach (var teacher in Model)
             {
-            <div> @teacher.TeacherId. @teacher.TeacherFname @teacher.TeacherLname</div>
+            <div>
+              <a href="/Teacher/Show/@teacher.TeacherId">@teacher.TeacherId:@teacher.TeacherFname @teacher.TeacherLname</a>
+            </div>
             }
         </div>
     </div>

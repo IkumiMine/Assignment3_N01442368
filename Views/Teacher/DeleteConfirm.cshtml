@@ -1,0 +1,13 @@
+﻿@model Assignment3_N01442368.Models.Teacher
+@{
+    ViewBag.Title = "DeleteConfirm";
+}
+
+<h2>Delete Confirm</h2>
+<p>You are going to delete a data of @Model.TeacherFname @Model.TeacherLname</p>
+<p>This cannot be undone.</p>
+<p>Are you sure?</p>
+<a href="/Teacher/Show/@Model.TeacherId">Going back to Teacher information page</a>
+<form method="POST" action="/Teacher/Delete/@Model.TeacherId">
+    <button>Confirm Delete</button>
+</form>
