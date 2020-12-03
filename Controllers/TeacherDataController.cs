@@ -6,6 +6,8 @@ using System.Net.Http;
 using System.Web.Http;
 using Assignment3_N01442368.Models;
 using MySql.Data.MySqlClient;
+using System.Diagnostics;
+using System.Web.Http.Cors;
 
 //#nullable enable 
 
@@ -110,7 +112,7 @@ namespace Assignment3_N01442368.Controllers
             MySqlCommand cmd = Connection.CreateCommand();
 
             //SQL QUERY
-            cmd.CommandText = "SELECT * FROM teachers JOIN classes ON teachers.teacherid = classes.teacherid WHERE teachers.teacherid = @id";
+            cmd.CommandText = "SELECT * FROM teachers LEFT JOIN classes ON teachers.teacherid = classes.teacherid WHERE teachers.teacherid = @id";
             cmd.Parameters.AddWithValue("@id", id);
             cmd.Prepare();
 
@@ -124,23 +126,22 @@ namespace Assignment3_N01442368.Controllers
                 int TeacherId =  Convert.ToInt32(ResultSet["teacherid"]);
                 string TeacherFname = ResultSet["teacherfname"].ToString();
                 string TeacherLname = ResultSet["teacherlname"].ToString();
-                DateTime HireDate = (DateTime)ResultSet["hiredate"];
+                /*DateTime HireDate = (DateTime)ResultSet["hiredate"];
                 decimal Salary = (decimal)ResultSet["salary"];
                 string ClassName = ResultSet["classname"].ToString();
                 DateTime StartDate = (DateTime)ResultSet["startdate"];
-                DateTime FinishDate =(DateTime)ResultSet["finishdate"];
+                DateTime FinishDate =(DateTime)ResultSet["finishdate"];*/
 
 
                 //assign the column information to the fields created in Teacher.cs
                 NewTeacher.TeacherId = TeacherId;
                 NewTeacher.TeacherFname = TeacherFname;
                 NewTeacher.TeacherLname = TeacherLname;
-                NewTeacher.HireDate = HireDate;
+                /*NewTeacher.HireDate = HireDate;
                 NewTeacher.Salary = Salary;
                 NewTeacher.ClassName = ClassName;
                 NewTeacher.StartDate = StartDate;
-                NewTeacher.FinishDate = FinishDate;
-
+                NewTeacher.FinishDate = FinishDate;*/
             }
 
             //Close the connection between the MySQL database and the web server 
@@ -184,10 +185,20 @@ namespace Assignment3_N01442368.Controllers
         /// <param name="NewTeacher">An object with fields to the columns of the teacher's table. Non-Deterministic.</param>
         /// <exmaple>POST api/TeacherData/AddTeacher</exmaple>
         [HttpPost]
+        [EnableCors(origins:"*", methods:"*", headers:"*")]
         public void AddTeacher(Teacher NewTeacher)
         {
+            //Server side validation not working
+            if (NewTeacher.TeacherFname == "" && NewTeacher.TeacherFname == null)
+            {
+                Debug.WriteLine("test");
+            }
+
             //Create an instance of a connection
             MySqlConnection Connection = School.AccessDatabase();
+
+            Debug.WriteLine(NewTeacher.TeacherFname);
+            Debug.WriteLine(NewTeacher.TeacherId);
 
             //Open the connection between the web server and database
             Connection.Open();

@@ -4,7 +4,9 @@
     padding-bottom: 20px;
     max-width:1200px;
     font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size:16px;
     background-color:lavender;
+    line-height:30px;
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -31,25 +33,77 @@ h2 {
 }
 /*input form in List.cshtml*/
 .main-content form {
-    margin-bottom: 15px;
+    margin:15px 0;
 }
-input {
+.inputArea {
     border-radius:8px;
     border-color:darkslategray;
 }
-.view-button > input {
+/*.view-button > input {
     color: #ffffff;
     background-color: darkblue; 
     border: none;
     margin: 5px;
     padding: 3px;
+}*/
+/*Add.cshtml*/
+#addForm {
+    position:relative;
 }
-/*the list of teachers in List.cshtml and teacher's information in Show.cshtml*/
+#submitBtn {
+    color: #ffffff;
+    background-color: darkblue;
+    border-radius:8px;
+    margin: 5px;
+    padding: 3px;
+}
+[id^="caution"] {
+    color: indianred;
+    position:absolute;
+    left:60%;
+    display:none;
+}
+#cautionFirst{
+    top:1%;
+}
+#cautionLast {
+    top:32%
+}
+/*the list of teachers on List.cshtml and teacher's information on Show.cshtml*/
 .id-name {
-    margin-left:45%;
+    margin: 0 auto;
     text-align: left;
+    width: 15%;
 }
 .info {
-    margin-left: 40%;
-    text-align: left;
+    margin:0 auto;
+    width:50%;
+}
+/*Show.cshtml*/
+.name-container {
+    width:50%;
+    margin:0 auto;
+    padding-bottom:10px;
+}
+#teacherName {
+    display:inline-block;
+}
+#deleteLink {
+    display:inline-block;
+    margin-left: 30px;
+}
+/*Delete confirm page*/
+#deleteName {
+    font-weight:bold;
+}
+#confirmDel {
+    background-color: indianred;
+    color:#fff;
+    border-radius:8px;
+}
+/*It's not working*/
+@media all and (max-width:768px) {
+    .id-name {
+        width:25%;
+    }
 }

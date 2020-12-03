@@ -7,7 +7,10 @@
     <h2>Teacher information</h2>
 
     <div class="main-content">
-        <h3>@Model.TeacherFname @Model.TeacherLname</h3>
+        <div class="name-container">
+            <h3 id="teacherName">@Model.TeacherFname @Model.TeacherLname</h3>
+            <a id="deleteLink" href="/Teacher/DeleteConfirm/@Model.TeacherId">Delete</a>
+        </div>
         <div class="info">
             <p>Hire date: @Model.HireDate</p>
             <p>Salary: $@Model.Salary</p>
@@ -17,10 +20,7 @@
 
         <nav>
             <div>
-                <a href="/Teacher/List"> &#8592 Bact to the list</a>
-            </div>
-            <div>
-                <a href="/Teacher/DeleteConfirm/@Model.TeacherId">Delete</a>
+                <a href="/Teacher/List">Bact to the list</a>
             </div>
         </nav>
     </div>

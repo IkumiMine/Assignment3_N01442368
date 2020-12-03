@@ -1,0 +1,36 @@
+﻿
+@{
+    ViewBag.Title = "AJaxAdd";
+}
+
+<h2>AJAX Add a new Teacher</h2>
+<div class="main-content">
+    <p>Input teacher's first name and last name and press an add teacher button.</p>
+       @{ 
+           //AJAX request to add a new teacher
+           //when an add teacher button was clicked, the  data will be sent to the database
+           //form submission is no need
+        }
+        <div>
+            <label for="TeacherFname" id="addLabelFirst">First name:</label>
+            <input class="inputArea" type="text" id="TeacherFname" name="TeacherFname" />
+            <p id="cautionFirst">Please type first name</p>
+        </div>
+        <div>
+            <label for="TeacherLname" id="addLabelLast">Last name:</label>
+            <input class="inputArea" type="text" id="TeacherLname" name="TeacherLname" />
+            <p id="cautionLast">Please type last name</p>
+        </div>
+        @{ 
+            //AddTeacher() is a JS method defined in /Scripts/teachers.js
+        }
+        <div>
+            <button onclick="AddTeacher();" id="submitBtn">Add Teacher</button>
+        </div>
+    <nav>
+        <a href="/Teacher/List">Bact to the list</a>
+    </nav>
+</div>
+
+
+

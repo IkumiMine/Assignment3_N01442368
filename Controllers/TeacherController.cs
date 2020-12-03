@@ -37,6 +37,8 @@ namespace Assignment3_N01442368.Controllers
             TeacherDataController controller = new TeacherDataController();
             Teacher NewTeacher = controller.FindTeacher(id);
 
+            Debug.WriteLine(id);
+
             return View(NewTeacher);
         }
 
@@ -45,6 +47,9 @@ namespace Assignment3_N01442368.Controllers
         {
             TeacherDataController controller = new TeacherDataController();
             Teacher NewTeacher = controller.FindTeacher(id);
+
+            //Identify if the method is running
+            Debug.WriteLine(id);
 
             return View(NewTeacher);
         }
@@ -65,6 +70,12 @@ namespace Assignment3_N01442368.Controllers
             return View();
         }
 
+        //GET: /Teacher/AjaxAdd
+        public ActionResult AjaxAdd()
+        {
+            return View();
+        }
+
         //POST: /Teacher/Create
         [HttpPost]
         public ActionResult Create(string TeacherFname, string TeacherLname)
@@ -72,6 +83,7 @@ namespace Assignment3_N01442368.Controllers
             //Identify if this method is running
             Debug.WriteLine(TeacherFname);
             Debug.WriteLine(TeacherLname);
+           
 
             Teacher NewTeacher = new Teacher();
             NewTeacher.TeacherFname = TeacherFname;

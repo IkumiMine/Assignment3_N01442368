@@ -4,21 +4,57 @@
 }
 
 <h2>Add a new Teacher</h2>
-<form method="POST" action="/Teacher/Create">
-    <div>
-        <label for="TeacherFname">First name:</label>
-        <input type="text" id="TeacherFname" name="TeacherFname"/>
-    </div>
-    <div>
-        <label for="TeacherLname">Last name:</label>
-        <input type="text" id="TeacherLname" name="TeacherLname" />
-    </div>
-    <div>
-        <input type="submit" value="Create Teacher"/>
-    </div>
-</form>
-<nav>
-    <a href="/Teacher/List"> &#8592 Bact to the list</a>
-</nav>
+<div class="main-content">
+    <p>Input teacher's first name and last name and press an add teacher button.</p>
+    <form method="POST" action="/Teacher/Create" name="createForm" id="addForm">
+        <div>
+            <label for="TeacherFname" id="addLabelFirst">First name:</label>
+            <input class="inputArea" type="text" id="TeacherFname" name="TeacherFname" />
+            <p id="cautionFirst">Please type first name</p>
+        </div>
+        <div>
+            <label for="TeacherLname" id="addLabelLast">Last name:</label>
+            <input class="inputArea" type="text" id="TeacherLname" name="TeacherLname" />
+            <p id="cautionLast">Please type last name</p>
+        </div>
+        <div>
+            <button id="submitBtn">Add Teacher</button>
+        </div>
+    </form>
+    <nav>
+        <a href="/Teacher/List">Bact to the list</a>
+    </nav>
+</div>
 
+<script>
+    var formHandle = document.forms.createForm;
+    var TeacherFname = document.getElementById("TeacherFname");
+    var TeacherLname = document.getElementById("TeacherLname");
+    var cautionFirst = document.getElementById("cautionFirst");
+    var cautionLast = document.getElementById("cautionLast");
+    var addLabelFirst = document.getElementById("addLabelFirst");
+    var addLabelLast = document.getElementById("addLabelLast");
 
+    formHandle.onsubmit = function () {
+
+        //valifation for first name
+        if (TeacherFname.value === "" || TeacherFname.value === null) {
+            TeacherFname.style.borderColor = "indianred";
+            TeacherFname.focus();
+            cautionFirst.style.display = "block";
+            addLabelFirst.style.color = "indianred";
+            return false;
+        }
+
+        //valifation for last name
+        if (TeacherLname.value === "" || TeacherLname.value === null) {
+            TeacherLname.style.backColor = "indianred";
+            TeacherLname.focus();
+            cautionLast.style.display = "block";
+            addLabelLast.style.color = "indianred";
+            return false;
+        }
+        //It doesn't matter if I add it or not?
+        //return true;   
+    }
+</script>

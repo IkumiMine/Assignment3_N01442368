@@ -9,30 +9,32 @@
 
     <div class="main-content">
         <!--<p>Imput the teacher's first name which you like to know and click View more info!</p>
-        <form action="/Teacher/Show/" method="POST">
-            <div>
-                <input type="number" name="teacherid" />
-            </div>
-            <div class="view-button">
-                <input class="viewButton" type="submit" value="View more info" />
-            </div>
-        </form>-->
+    <form action="/Teacher/Show/" method="POST">
+        <div>
+            <input type="number" name="teacherid" />
+        </div>
+        <div class="view-button">
+            <input class="viewButton" type="submit" value="View more info" />
+        </div>
+    </form>-->
+        <p>Type teacher's name that you are looking for.</p>
+        <p>If they're not exists on the list, you can add from the link below. </p>
 
         <nav>
             <a href="/Teacher/Add">Add a new teacher</a>
         </nav>
 
         <form action="/Teacher/List" method="GET">
-            <input type="text" name="SearchKey" autocomplete="off" />
-            <input type="submit" value="Search"/>
+            <input class="inputArea" type="text" name="SearchKey" autocomplete="off" />
+            <input id="submitBtn" type="submit" value="Search" />
         </form>
 
         <div class="id-name">
             @foreach (var teacher in Model)
             {
-            <div>
-              <a href="/Teacher/Show/@teacher.TeacherId">@teacher.TeacherId:@teacher.TeacherFname @teacher.TeacherLname</a>
-            </div>
+                <div>
+                    <a href="/Teacher/Show/@teacher.TeacherId">@teacher.TeacherId. @teacher.TeacherFname @teacher.TeacherLname</a>
+                </div>
             }
         </div>
     </div>
