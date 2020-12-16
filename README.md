@@ -13,3 +13,4 @@ Updates from the assignment4 (2020/12/16)
 - Added more information to MVP to display such as teacherId, salary, hiredate and employeenumber.
 - Changed the error message colour from red to black.
 - The document of the server-rendered cycles which happen when a teacher is updated in the system was added in the Contents/Images folder.
+* Client side validation is still working on.
