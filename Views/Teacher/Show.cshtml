@@ -9,18 +9,19 @@
     <div class="main-content">
         <div class="name-container">
             <h3 id="teacherName">@Model.TeacherFname @Model.TeacherLname</h3>
+            <a id="updateLink" href="/Teacher/Update/@Model.TeacherId">Update</a>
             <a id="deleteLink" href="/Teacher/DeleteConfirm/@Model.TeacherId">Delete</a>
         </div>
         <div class="info">
-            <p>Hire date: @Model.HireDate</p>
-            <p>Salary: $@Model.Salary</p>
-            <p>Class: @Model.ClassName</p>
-            <p>Class date: @Model.StartDate - @Model.FinishDate</p>
+            <p>Teacher ID: @Model.TeacherId</p>
+            <p>Hiredate: @Model.HireDate</p>
+            <p>Employee Number: @Model.TeacherNumber</p>
+            <p>Salary: $ @Model.TeacherSalary</p>
         </div>
 
         <nav>
             <div>
-                <a href="/Teacher/List">Bact to the list</a>
+                <a href="/Teacher/List">Back to the list</a>
             </div>
         </nav>
     </div>

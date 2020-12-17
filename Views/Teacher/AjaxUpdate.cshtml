@@ -1,0 +1,54 @@
+﻿@model Assignment3_N01442368.Models.Teacher
+@{
+    ViewBag.Title = "AjaxUpdate";
+}
+@{ 
+    /*
+    This file uses a combination of server redering and ajax logic.
+    - Server rendering to pull current information about the teacher and display in fields
+    - Request to update teacher with new values is fulfilled by ajax
+    */
+}
+<h2>Update teacher's information AJAX</h2>
+<div class="main-content">
+    <p>Update <span id="teacherName">@Model.TeacherFname @Model.TeacherLname</span> 's information and press an update teacher button.</p>
+    @{
+        /*AJAX request to update teacher*/
+        /*No form submission needed*/
+        /*button onclick will handle form submission*/
+        /*Each item has an ID for validation && ajax submission*/
+
+    }
+    <div>
+        <label for="TeacherFname" id="addLabelFirst">First name:</label>
+        <input class="inputArea" type="text" id="TeacherFname" name="TeacherFname" value="@Model.TeacherFname" />
+        <p id="cautionFirst">Please type first name</p>
+    </div>
+    <div>
+        <label for="TeacherLname" id="addLabelLast">Last name:</label>
+        <input class="inputArea" type="text" id="TeacherLname" name="TeacherLname" value="@Model.TeacherLname" />
+        <p id="cautionLast">Please type last name</p>
+    </div>
+    <div>
+        <label for="HireDate">Hire date:</label>
+        <input class="inputArea" type="text" id="HireDate" name="HireDare" value="@Model.HireDate" />
+    </div>
+    <div>
+        <label for="TeacherNumber">Employee number:</label>
+        <input class="inputArea" type="text" id="TeacherNumber" name="TeacherNumber" value="@Model.TeacherNumber" />
+    </div>
+    <div>
+        <label for="TeacherSalary">Salary:</label>
+        <input class="inputArea" type="text" id="TeacherSalary" name="TeacherSalary" value="@Model.TeacherSalary" />
+    </div>
+    @{
+        //UpdateTeacher() is a JS method defined in /Scripts/teachers.js
+    }
+    <div>
+        <button id="submitBtn" onclick="UpdateTeacher(@Model.TeacherId);">Update Teacher</button>
+    </div>
+    <nav>
+        <a href="/Teacher/List">Back to list</a>
+    </nav>
+</div>
+

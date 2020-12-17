@@ -19,7 +19,7 @@
 input,
 select,
 textarea {
-    max-width: 125px;
+    max-width: 200px;
 }
 h2 {
     padding-bottom:10px;
@@ -31,9 +31,12 @@ h2 {
     padding:20px 0;
     position:relative;
 }
+div {
+    margin:3px 0;
+}
 /*input form in List.cshtml*/
 .main-content form {
-    margin:15px 0;
+    margin: 15px auto;
 }
 .inputArea {
     border-radius:8px;
@@ -58,7 +61,6 @@ h2 {
     padding: 3px;
 }
 [id^="caution"] {
-    color: indianred;
     position:absolute;
     left:60%;
     display:none;
@@ -92,18 +94,15 @@ h2 {
     display:inline-block;
     margin-left: 30px;
 }
+#updateLink {
+    margin-left: 30px;
+}
 /*Delete confirm page*/
-#deleteName {
+#teacherName {
     font-weight:bold;
 }
 #confirmDel {
     background-color: indianred;
     color:#fff;
     border-radius:8px;
-}
-/*It's not working*/
-@media all and (max-width:768px) {
-    .id-name {
-        width:25%;
-    }
 }

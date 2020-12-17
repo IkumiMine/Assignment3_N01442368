@@ -12,10 +12,11 @@ namespace Assignment3_N01442368.Models
         public string TeacherFname;
         public string TeacherLname;
         public DateTime HireDate;
-        public decimal Salary;
-        public string ClassName;
-        public DateTime StartDate;
-        public DateTime FinishDate;
+        public decimal TeacherSalary;
+        public string TeacherNumber;
+        //public string ClassName;
+        //public DateTime StartDate;
+        //public DateTime FinishDate;
 
         public Teacher() { }
 
